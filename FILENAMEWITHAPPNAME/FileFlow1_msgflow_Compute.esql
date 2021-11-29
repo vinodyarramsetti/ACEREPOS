@@ -1,0 +1,12 @@
+
+
+CREATE COMPUTE MODULE FileFlow1_msgflow_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		SET Environment.XMLNSC.Response = InputRoot.XMLNSC;
+		SET OutputRoot.XMLNSC.Response = InputRoot.XMLNSC;
+		RETURN TRUE;
+	END;
+
+	
+END MODULE;

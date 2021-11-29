@@ -1,0 +1,20 @@
+
+
+CREATE COMPUTE MODULE FileFlow1_msgflow_Compute1
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE curtime CHARACTER ;
+		SET curtime = CAST(CURRENT_TIMESTAMP AS CHARACTER FORMAT 'yyyy-MM-dd HH:mm:ss');
+		SET curtime = REPLACE(curtime,':','');
+		SET curtime = REPLACE(curtime,' ','');
+		--SET curtime = REPLACE(curtime,'-''');
+		DECLARE App_Name CHARACTER ApplicationLabel;
+		DECLARE MsgFlow_Name CHARACTER MessageFlowLabel;
+		SET OutputRoot.XMLNSC.Response = Environment.XMLNSC.Response;
+		SET OutputLocalEnvironment.Destination.File.Directory = 'E:\FileNodes';
+		SET OutputLocalEnvironment.Destination.File.Name = App_Name||'_'||MsgFlow_Name||'_'||curtime;
+		PROPAGATE TO TERMINAL 'out' FINALIZE NONE DELETE NONE;
+		PROPAGATE TO TERMINAL 'out1';
+		RETURN FALSE;
+	END;
+END MODULE;
